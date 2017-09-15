@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Ionic Blank
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  	<button ion-button (click)="scanBarcode()">Scan</button>
+
+  	<form *ngIf="scannedSuccess" (ngSubmit)="getScannedInfo($event)" [formGroup]="scannedInfo">
+		<ion-grid>
+	  		<ion-row>
+	    		<ion-col col-12>
+	    			<ion-item>
+			    		<ion-label>Scanned</ion-label>
+			    		<ion-input type="text" formControlName="info" [(ngModel)]="info" pattern="(https?:\/\/)?[a-z0-9-]*\.?[a-z0-9-]+\.[a-z0-9-]+(\/[^<>]*)?" required></ion-input>
+	  				</ion-item>
+	    		</ion-col>
+	  		</ion-row>
+		</ion-grid>
+	</form>
+
+	<ion-card *ngIf="scannedSuccess">
+	  	<ion-card-header>
+	    	You Have Scanned
+	  	</ion-card-header>
+
+  		<ion-card-content>
+    		{{info}}
+  		</ion-card-content>
+	</ion-card>
+
+	<ion-item>
+    	<ion-input type="text" placeholder="Enter QR Code data" [(ngModel)]="qrData">
+    	</ion-input>
+  	</ion-item>
+  	<button ion-button full icon-left (click)="createCode()"><ion-icon name="barcode"></ion-icon>Generate QR Code</button>
+
+  	<ion-card *ngIf="createdCode">
+    	<ngx-qrcode [qrc-value]="createdCode"></ngx-qrcode>
+    	<ion-card-content>
+      		<p>Value: {{ createdCode }}</p>
+    	</ion-card-content>
+  	</ion-card>
+
+</ion-content>
